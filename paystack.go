@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
@@ -100,7 +99,7 @@ type ListMeta struct {
 // and HTTP client, allowing overriding of the HTTP client to use.
 // This is useful if you're running in a Google AppEngine environment
 // where the http.DefaultClient is not available.
-func NewClient(key string, httpClient *http.Client) *Client {
+func NewClient(key string, httpClient *http.Client,loggingEnabled bool) *Client {
 	if httpClient == nil {
 		httpClient = &http.Client{Timeout: defaultHTTPTimeout}
 	}
@@ -110,7 +109,7 @@ func NewClient(key string, httpClient *http.Client) *Client {
 		client:         httpClient,
 		key:            key,
 		baseURL:        u,
-		LoggingEnabled: true,
+		LoggingEnabled: loggingEnabled,
 		Log:            log.New(os.Stderr, "", log.LstdFlags),
 	}
 
@@ -129,6 +128,8 @@ func NewClient(key string, httpClient *http.Client) *Client {
 
 	return c
 }
+
+
 
 // Call actually does the HTTP request to Paystack API
 func (c *Client) Call(method, path string, body, v interface{}) error {
@@ -244,7 +245,7 @@ func mustGetTestKey() string {
 // The actual response will be written to the `v` parameter
 func (c *Client) decodeResponse(httpResp *http.Response, v interface{}) error {
 	var resp Response
-	respBody, err := ioutil.ReadAll(httpResp.Body)
+	respBody, err := io.ReadAll(httpResp.Body)
 	json.Unmarshal(respBody, &resp)
 
 	if status, _ := resp["status"].(bool); !status || httpResp.StatusCode >= 400 {

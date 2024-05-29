@@ -6,7 +6,7 @@ var c *Client
 
 func init() {
 	apiKey := mustGetTestKey()
-	c = NewClient(apiKey, nil)
+	c = NewClient(apiKey, nil,true)
 }
 
 func TestResolveCardBIN(t *testing.T) {

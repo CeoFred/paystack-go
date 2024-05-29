@@ -96,7 +96,7 @@ type TransactionTimeline struct {
 // Initialize initiates a transaction process
 // For more details see https://developers.paystack.co/v1.0/reference#initialize-a-transaction
 func (s *TransactionService) Initialize(txn *TransactionRequest) (Response, error) {
-	u := fmt.Sprintf("/transaction/initialize")
+	u := ("/transaction/initialize")
 	resp := Response{}
 	err := s.client.Call("POST", u, txn, &resp)
 	return resp, err
@@ -155,7 +155,7 @@ func (s *TransactionService) Timeline(reference string) (*TransactionTimeline, e
 // Totals returns total amount received on your account
 // For more details see https://developers.paystack.co/v1.0/reference#transaction-totals
 func (s *TransactionService) Totals() (Response, error) {
-	u := fmt.Sprintf("/transaction/totals")
+	u := ("/transaction/totals")
 	resp := Response{}
 	err := s.client.Call("GET", u, nil, &resp)
 	return resp, err
@@ -164,7 +164,7 @@ func (s *TransactionService) Totals() (Response, error) {
 // Export exports transactions to a downloadable file and returns a link to the file
 // For more details see https://developers.paystack.co/v1.0/reference#export-transactions
 func (s *TransactionService) Export(params RequestValues) (Response, error) {
-	u := fmt.Sprintf("/transaction/export")
+	u := ("/transaction/export")
 	resp := Response{}
 	err := s.client.Call("GET", u, nil, &resp)
 	return resp, err
@@ -173,7 +173,7 @@ func (s *TransactionService) Export(params RequestValues) (Response, error) {
 // ReAuthorize requests reauthorization
 // For more details see https://developers.paystack.co/v1.0/reference#request-reauthorization
 func (s *TransactionService) ReAuthorize(req AuthorizationRequest) (Response, error) {
-	u := fmt.Sprintf("/transaction/request_reauthorization")
+	u := ("/transaction/request_reauthorization")
 	resp := Response{}
 	err := s.client.Call("POST", u, nil, &resp)
 	return resp, err
@@ -182,7 +182,7 @@ func (s *TransactionService) ReAuthorize(req AuthorizationRequest) (Response, er
 // CheckAuthorization checks authorization
 // For more details see https://developers.paystack.co/v1.0/reference#check-authorization
 func (s *TransactionService) CheckAuthorization(req AuthorizationRequest) (Response, error) {
-	u := fmt.Sprintf("/transaction/check_reauthorization")
+	u := ("/transaction/check_reauthorization")
 	resp := Response{}
 	err := s.client.Call("POST", u, nil, &resp)
 	return resp, err

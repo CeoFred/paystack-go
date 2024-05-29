@@ -2,7 +2,7 @@ package paystack
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
@@ -30,7 +30,7 @@ type ErrorResponse struct {
 }
 
 func newAPIError(resp *http.Response) *APIError {
-	p, _ := ioutil.ReadAll(resp.Body)
+	p, _ := io.ReadAll(resp.Body)
 
 	var paystackErrorResp ErrorResponse
 	_ = json.Unmarshal(p, &paystackErrorResp)
