@@ -58,6 +58,7 @@ type Client struct {
 	Charge       *ChargeService
 	Bank         *BankService
 	BulkCharge   *BulkChargeService
+	Refund       *RefundsService
 
 	LoggingEnabled bool
 	Log            Logger
@@ -99,7 +100,7 @@ type ListMeta struct {
 // and HTTP client, allowing overriding of the HTTP client to use.
 // This is useful if you're running in a Google AppEngine environment
 // where the http.DefaultClient is not available.
-func NewClient(key string, httpClient *http.Client,loggingEnabled bool) *Client {
+func NewClient(key string, httpClient *http.Client, loggingEnabled bool) *Client {
 	if httpClient == nil {
 		httpClient = &http.Client{Timeout: defaultHTTPTimeout}
 	}
@@ -125,11 +126,10 @@ func NewClient(key string, httpClient *http.Client,loggingEnabled bool) *Client 
 	c.Charge = (*ChargeService)(&c.common)
 	c.Bank = (*BankService)(&c.common)
 	c.BulkCharge = (*BulkChargeService)(&c.common)
+	c.Refund = (*RefundsService)(&c.common)
 
 	return c
 }
-
-
 
 // Call actually does the HTTP request to Paystack API
 func (c *Client) Call(method, path string, body, v interface{}) error {
